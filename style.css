@@ -1,0 +1,88 @@
+body {
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: 500px;
+}
+
+.container > * {
+    margin: .5rem 0;
+}
+
+#game {
+    display: flex;
+    background-color: forestgreen;
+    height: 100px; /*todo change*/
+    cursor: url("./assets/hammer32.png"), auto;
+}
+
+.hole {
+    position: relative;
+    width: 100px;
+}
+
+.mole {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url("./assets/mole.png");
+    background-size: 100% 100%;
+    width: 100px;
+    height: 100px;
+    z-index: 3;
+
+    transition: all 1s ease;
+}
+
+.hole-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100px;
+    width: 100px;
+    background-color: #000;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.hole-foreground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 5;
+    width: 100px;
+    height: 100px;
+    /*Webkit, old syntax*/
+    background: -webkit-radial-gradient(50% 0, circle, transparent 50%, forestgreen 50%);
+    /*IE10+, FireFox, Opera*/
+    background: radial-gradient(circle at 50% 0, transparent 50%, forestgreen 50%);
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    margin: .25rem;
+    padding: .75rem .5rem;
+    border-radius: 5%;
+}
+
+#buttons {
+    display: flex;
+    justify-content: center;
+}
+
+#startBtn {
+    background-color: green;
+}
+#pauseBtn {
+    background-color: red; 
+}
+#clearBtn {
+    background-color: goldenrod;
+}
+
+

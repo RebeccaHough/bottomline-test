@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Whack-a-mole</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" type="image/x-icon" href="./assets/mole.png">
+        <link rel="stylesheet" href="./style.css" type="text/css">
+        <script src="./script.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div>Whack-a-mole!</div> 
+            <div>Score: <span id="score">0</span></div>
+            <div id="game">
+                <div class="hole">
+                    <div class="hole-background"></div>
+                    <div class="mole"></div>
+                    <div class="hole-foreground"></div>
+                </div>
+                <div class="hole">
+                    <div class="hole-background"></div>
+                    <div class="mole"></div>
+                    <div class="hole-foreground"></div>
+                </div>
+                <div class="hole">
+                    <div class="hole-background"></div>
+                    <div class="mole"></div>
+                    <div class="hole-foreground"></div>
+                </div>
+            </div>
+            <div id="buttons">
+                <button id="startBtn">Start game</button>
+                <button id="pauseBtn">Pause game</button>
+                <button id="clearBtn">Clear score</button>
+            </div>
+        </div>
+    </body>
+</html>
