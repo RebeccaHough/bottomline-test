@@ -42,6 +42,7 @@ body {
     height: 100px;
     z-index: 3;
 
+    transform: translateY(2rem);
     transition: all 1s ease;
 }
 

@@ -18,12 +18,25 @@
 //sound
 //cursor animation/change on successful hit
 
-const popupTimer = 1000; //ms
-const popupDistance = 2; //rem
+/** How long to pop moles up for in ms */
+const popupTimer = 1000; //todo convert to rand
+/** Distance to move moles up and down by in rem */
+const popupDistance = 2; //todo but game area is in px
+/** Total game length in milliseconds */
+const totalGameTime = 60000;
+/** Interval id of current game. Used to pause the game */
 let game;
+/** HTML element of the game area */
+let gamearea;
+/** Game score */
 let score = 0;
-let gameTimer = 60000; //ms
-let timers;
+/** Game countdown timer */
+let gameTimer = totalGameTime; 
+/** References to the html element and timer ID for the current mole. 
+ * Used to popdown the mole if it is hit */
+let mole, timer;
+/** Whether the game is currently paused */
+let paused = true;
 
 window.onload = (e) => {
     //set up buttons
@@ -33,90 +46,142 @@ window.onload = (e) => {
     startBtn.onclick = startGame;
     pauseBtn.onclick = pauseGame;
     resetBtn.onclick = resetGame;
-    
+
+    //set up click listener
+    gamearea = document.getElementById("game");
+    gamearea.addEventListener('click', clickHandler);
 }
 
 function startGame() {
     console.log("Game started.");
-    updateGameState(false, "Game in progress.");
-    game = setInterval(() => {
-        let moles = document.getElementsByClassName("mole");
-        //set up click listeners
-        // for(let mole of moles) {
-        //     mole.addEventListener("", moleClicked)
-        // }
-        let mole = selectMole(moles);
-        popup(mole);
+    updateGameStateText(false, "Game in progress.");
+
+    let moles = document.getElementsByClassName("mole");
+
+    paused = false;
+
+    game = setInterval(() => {    
+
+        mole = selectMole(moles);
+        timer = popup(mole);
         
     }, 3000) //todo ramp up time between moles
-}
 
-function pauseGame() {
-    console.log("Game paused.");
-    updateGameState(false, "Game paused.");
-    clearInterval(game);
-}
-
-//todo
-//reset game timer and clear current score
-function resetGame() {
-    updateGameState(true);
-    updateScore(0);
+    //todo countdown game timer
 }
 
 /**
- * Get random mole from array of moles
- * @param {*} moles 
+ * Pause the game by clearing the game's interval ID
+ */
+function pauseGame() {
+    console.log("Game paused.");
+    updateGameStateText(false, "Game paused.");
+    clearInterval(game);
+    //to avoid having to un/re-register game area click listener
+    //use global paused variable to prevent score updates
+    paused = true
+}
+
+/**
+ * Reset the game timer and clear the current score and game state text
+ */
+function resetGame() {
+    pauseGame();
+    updateGameStateText(true);
+    updateScore(0);
+    gameTimer = totalGameTime;
+}
+
+/**
+ * Determine whether a click was a hit or a miss and act accordingly
+ * @param {Event} e 
+ */
+function clickHandler(e) {
+    //prevent score updates
+    if(paused) return;
+    console.log(e.target);
+    if(
+        e.target.dataset 
+        && e.target.dataset.moleState 
+        && (e.target.dataset.moleState == "active")
+    )
+        moleClickHit(mole, timer);
+    else 
+        moleClickMiss();
+}
+
+/**
+ * Get random mole from array of moles (pseudo-random)
+ * @param {HTMLCollection} moles 
  */
 function selectMole(moles) {
     let max = moles.length;
     let num = Math.floor(Math.random() * max);
     console.log(num);
-    console.log(moles[num]);
     return moles[num];
 }
 
 /**
  * Moves mole up by [popupDistance]rem and sets a timer for popdown
- * @param {*} mole HTML element to be moved
+ * @param {Element} mole HTML element to be moved
+ * @returns {number} the timer ID for the timer that specifies how long the 
+ * mole will be popped up for
  */
 function popup(mole) {
     mole.style.transform = "translateY(" + -popupDistance + "rem)";
+    mole.dataset.moleState = "active"
     let timer = setTimeout(() => {
         popdown(mole);
-    }, popupTimer)
-    return timer;
-}
-
-function popdown(mole) {
-    mole.style.transform = "translateY(" + popupDistance + "rem)";
-}
-
-function moleClicked(mole) {
-    //todo check if correct or not
-
-    //get reference to mole's timer and clear it
-    clearTimeout(timers[x, y]);
-    popdown(mole);
-    //update score
-    updateScore(1);
+    }, popupTimer);
+    return timer
 }
 
 /**
- * Add amount to score and update in DOM
+ * Moves mole down by [popupDistance]rem and sets a timer for popdown
+ * @param {Element} mole HTML element to be moved
+ */
+function popdown(mole) {
+    mole.style.transform = "translateY(" + popupDistance + "rem)";
+    mole.dataset.moleState = "hidden"
+}
+
+/**
+ * Handle game updates for an unsuccessful mole whack
+ */
+function moleClickHit(mole, timer) {
+    console.log("Hit!");
+    updateScore(1);
+    //make mole pop down immediately
+    clearTimeout(timer);
+    popdown(mole);
+}
+
+/**
+ * Handle game updates for an unsuccessful mole whack
+ */
+function moleClickMiss() {
+    console.log("Miss!");
+    updateScore(-1);
+}
+
+/**
+ * Add amount to score and inform user. If amount is 0, score is set to 0 instead.
  * @param {number} amount 
  */
 function updateScore(amount) {
-    score += amount;
+    if(amount !== 0)
+        score += amount;
+    else 
+        score = 0;
     document.getElementById("score").innerHTML = score;
 }
 
 /**
  * Inform the user of the current game state
- * @param {boolean} hide don't display game state text if true
+ * @param {boolean} hide if true, don't display game state text 
  * @param {string} text optional text to set game state text to
  */
-function updateGameState(hide, text) {
+function updateGameStateText(hide, text) {
     let gameState = document.getElementById("gameState");
     if(hide) {
         gameState.hidden = true;
