@@ -1,27 +1,44 @@
-//todo click to go away
-//todo difficulty ramp
-//todo fix jumping when moving down
-//todo fix start position and overflow
+//todo
+//click to go away
+//fix spam clicking start game --- toggle buttons  aria-pressed="false"
+//visible for random amount of time
+//time limit
+//fix jumping when moving down
+//fix start position and overflow
+//IE/responsiveness implementation/testing 
+    //(make moles flow onto new lines if insufficient space; stack buttons)
+//accessibility (button labels, img labels/alts)
+    //keydown for buttons (with labels to say what key to press)
+    //keydown for moles
+//docs
+
+//nice-to-have
+//prettier text/game (rounder mole holes)
+//unit test
+//sound
+//cursor animation/change on successful hit
 
 const popupTimer = 1000; //ms
 const popupDistance = 2; //rem
 let game;
 let score = 0;
+let gameTimer = 60000; //ms
 let timers;
 
 window.onload = (e) => {
     //set up buttons
     let startBtn = document.getElementById("startBtn");
     let pauseBtn = document.getElementById("pauseBtn");
-    let clearBtn = document.getElementById("clearBtn");
+    let resetBtn = document.getElementById("resetBtn");
     startBtn.onclick = startGame;
     pauseBtn.onclick = pauseGame;
-    clearBtn.onclick = updateScore.bind(this, 0);
+    resetBtn.onclick = resetGame;
     
 }
 
 function startGame() {
     console.log("Game started.");
+    updateGameState(false, "Game in progress.");
     game = setInterval(() => {
         let moles = document.getElementsByClassName("mole");
         //set up click listeners
@@ -36,7 +53,15 @@ function startGame() {
 
 function pauseGame() {
     console.log("Game paused.");
+    updateGameState(false, "Game paused.");
     clearInterval(game);
+}
+
+//todo
+//reset game timer and clear current score
+function resetGame() {
+    updateGameState(true);
+    updateScore(0);
 }
 
 /**
@@ -79,9 +104,29 @@ function moleClicked(mole) {
 
 /**
  * Add amount to score and update in DOM
- * @param {*} amount 
+ * @param {number} amount 
  */
 function updateScore(amount) {
     score += amount;
     document.getElementById("score").innerHTML = score;
+}
+
+/**
+ * Inform the user of the current game state
+ * @param {boolean} hide don't display game state text if true
+ * @param {string} text optional text to set game state text to
+ */
+function updateGameState(hide, text) {
+    let gameState = document.getElementById("gameState");
+    if(hide) {
+        gameState.hidden = true;
+        gameState.classList.remove('show');
+        gameState.classList.add('hidden');
+    } else {
+        gameState.hidden = false;
+        gameState.classList.remove('hidden');
+        gameState.classList.add('show');
+    }
+    if(text)
+        gameState.innerHTML = text;
 }

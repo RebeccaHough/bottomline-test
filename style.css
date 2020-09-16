@@ -12,11 +12,19 @@ body {
     margin: .5rem 0;
 }
 
+#gameInfo {
+    display: flex;
+    justify-content: space-between;
+}
+
 #game {
     display: flex;
     background-color: forestgreen;
     height: 100px; /*todo change*/
     cursor: url("./assets/hammer32.png"), auto;
+    /*todo keep?*/
+    overflow: hidden;
+    padding-top: 35px;
 }
 
 .hole {
@@ -61,6 +69,16 @@ body {
     background: radial-gradient(circle at 50% 0, transparent 50%, forestgreen 50%);
 }
 
+/*For use with #gameState*/
+.show {
+    display: flex;
+    justify-content: center;
+}
+
+.hidden {
+    display: none;
+}
+
 button {
     cursor: pointer;
     border: none;
@@ -69,20 +87,38 @@ button {
     padding: .75rem .5rem;
     border-radius: 5%;
 }
+button:focus {
+    outline: 3px solid rgba(0, 0, 0, 0.25);
+}
 
-#buttons {
+#controls {
     display: flex;
     justify-content: center;
 }
 
 #startBtn {
-    background-color: green;
+    background-color: forestgreen;
+    opacity: 50%;
+    color: #fff;
 }
+#startBtn:active {
+    background-color: forestgreen;
+    opacity: 100%;
+}
+
 #pauseBtn {
     background-color: red; 
+    opacity: 50%;
+    color: #fff;
 }
-#clearBtn {
+#pauseBtn:active {
+    background-color: red;
+    opacity: 100%;
+}
+
+#resetBtn {
     background-color: goldenrod;
+    color: #fff;
 }
 
 

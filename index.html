@@ -11,8 +11,11 @@
     </head>
     <body>
         <div class="container">
-            <div>Whack-a-mole!</div> 
-            <div>Score: <span id="score">0</span></div>
+            <div id="title">Whack-a-mole!</div>
+            <div id="gameInfo">
+                <div>Time left: <span id="timeLeft">00:00</span></div>
+                <div>Score: <span id="score">0</span></div>
+            </div>
             <div id="game">
                 <div class="hole">
                     <div class="hole-background"></div>
@@ -30,10 +33,11 @@
                     <div class="hole-foreground"></div>
                 </div>
             </div>
-            <div id="buttons">
-                <button id="startBtn">Start game</button>
-                <button id="pauseBtn">Pause game</button>
-                <button id="clearBtn">Clear score</button>
+            <div id="gameState" hidden="true" class="hidden">Game paused.</div>
+            <div id="controls">
+                <button id="startBtn" aria-label="start game">Start game</button>
+                <button id="pauseBtn" aria-label="pause game">Pause game</button>
+                <button id="resetBtn" aria-label="reset game">Reset game</button>
             </div>
         </div>
     </body>
