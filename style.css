@@ -99,22 +99,14 @@ button:focus {
 
 #startBtn {
     background-color: forestgreen;
-    opacity: 50%;
-    color: #fff;
-}
-#startBtn:active {
-    background-color: forestgreen;
     opacity: 100%;
+    color: #fff;
 }
 
 #pauseBtn {
     background-color: red; 
-    opacity: 50%;
-    color: #fff;
-}
-#pauseBtn:active {
-    background-color: red;
     opacity: 100%;
+    color: #fff;
 }
 
 #resetBtn {
@@ -122,4 +114,7 @@ button:focus {
     color: #fff;
 }
 
+.disabled {
+    opacity: 50% !important;
+}
 

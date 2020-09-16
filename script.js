@@ -55,6 +55,10 @@ window.onload = (e) => {
 function startGame() {
     console.log("Game started.");
     updateGameStateText(false, "Game in progress.");
+    document.getElementById("pauseBtn").classList.remove("disabled");
+    document.getElementById("pauseBtn").setAttribute("aria-pressed", false);
+    document.getElementById("startBtn").classList.add("disabled");
+    document.getElementById("startBtn").setAttribute("aria-pressed", true);
 
     let moles = document.getElementsByClassName("mole");
 
@@ -79,7 +83,11 @@ function pauseGame() {
     clearInterval(game);
     //to avoid having to un/re-register game area click listener
     //use global paused variable to prevent score updates
-    paused = true
+    paused = true;
+    document.getElementById("pauseBtn").classList.add("disabled");
+    document.getElementById("pauseBtn").setAttribute("aria-pressed", true);
+    document.getElementById("startBtn").classList.remove("disabled");
+    document.getElementById("startBtn").setAttribute("aria-pressed", false);
 }
 
 /**
