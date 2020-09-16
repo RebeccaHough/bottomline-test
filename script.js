@@ -1,6 +1,5 @@
 //todo
-//click to go away
-//fix spam clicking start game --- toggle buttons  aria-pressed="false"
+//fix spam clicking start game
 //visible for random amount of time
 //time limit
 //fix jumping when moving down
@@ -53,16 +52,20 @@ window.onload = (e) => {
 }
 
 function startGame() {
+    //prevent multiple 'games' from being started
+    if(!paused) return;
+    paused = false;
+
     console.log("Game started.");
     updateGameStateText(false, "Game in progress.");
+
+    //toggle buttons
     document.getElementById("pauseBtn").classList.remove("disabled");
     document.getElementById("pauseBtn").setAttribute("aria-pressed", false);
     document.getElementById("startBtn").classList.add("disabled");
     document.getElementById("startBtn").setAttribute("aria-pressed", true);
 
     let moles = document.getElementsByClassName("mole");
-
-    paused = false;
 
     game = setInterval(() => {    
 
@@ -84,6 +87,7 @@ function pauseGame() {
     //to avoid having to un/re-register game area click listener
     //use global paused variable to prevent score updates
     paused = true;
+    //toggle buttons
     document.getElementById("pauseBtn").classList.add("disabled");
     document.getElementById("pauseBtn").setAttribute("aria-pressed", true);
     document.getElementById("startBtn").classList.remove("disabled");
