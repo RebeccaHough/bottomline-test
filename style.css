@@ -25,6 +25,8 @@
 
 #game .row {
     display: flex;
+    /* use space-around in IE */
+    justify-content: space-around;
     justify-content: space-evenly;
     background-color: forestgreen;
 }
