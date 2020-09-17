@@ -86,7 +86,6 @@ function startGame() {
     }, timeBetweenMoles);
 
     //start/unpause countdown game timer
-    console.log(timeToCountdownFrom)
     startTimer(document.getElementById("timeLeft"), timeToCountdownFrom);
 }
 

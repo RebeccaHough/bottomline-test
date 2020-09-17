@@ -1,6 +1,3 @@
-body {
-}
-
 .container {
     display: flex;
     flex-direction: column;
@@ -19,16 +16,32 @@ body {
 
 #game {
     display: flex;
+    flex-flow: column;
     background-color: forestgreen;
-    height: 100px; /*todo change*/
     cursor: url("./assets/hammer32.png"), auto;
-    /*todo keep?*/
     overflow: hidden;
     padding-top: 35px;
 }
 
+#game .row {
+    display: flex;
+    justify-content: space-evenly;
+    background-color: forestgreen;
+}
+
+#game .row:nth-child(1) {
+    z-index: 1;
+}
+#game .row:nth-child(2) {
+    z-index: 5;
+}
+#game .row:nth-child(3) {
+    z-index: 10;
+}
+
 .hole {
     position: relative;
+    height: 100px;
     width: 100px;
 }
 
