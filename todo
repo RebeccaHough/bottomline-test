@@ -1,0 +1,11 @@
+fix: timer jumps over the (max - 1)th second
+visible for random amount of time
+fix jumping when moving down
+accessibility (button labels, img labels/alts)
+    keydown for buttons (with labels to say what key to press)
+    keydown for moles
+
+nice-to-have
+prettier text/game (rounder mole holes)
+sound
+cursor animation/change on successful hit

@@ -1,18 +1,3 @@
-//todo
-//add more moles and allow them to flow onto new lines
-//mobile/IE testing
-
-//fix: timer jumps over the (max - 1)th second
-//visible for random amount of time
-//fix jumping when moving down
-//accessibility (button labels, img labels/alts)
-    //keydown for buttons (with labels to say what key to press)
-    //keydown for moles
-
-//nice-to-have
-//prettier text/game (rounder mole holes)
-//sound
-//cursor animation/change on successful hit
 
 /** How long to pop moles up for in ms */
 const popupTimer = 1000; //todo convert to rand
@@ -40,7 +25,7 @@ let paused = true;
 /** Whether the current game is over */
 let ended = false;
 
-window.onload = (e) => {
+window.onload = function(e) {
     //set up buttons
     let startBtn = document.getElementById("startBtn");
     let pauseBtn = document.getElementById("pauseBtn");
@@ -80,7 +65,7 @@ function startGame() {
     mole = selectMole(moles);
     timer = popup(mole);  
 
-    game = setInterval(() => {    
+    game = setInterval(function() {    
         mole = selectMole(moles);
         timer = popup(mole);     
     }, timeBetweenMoles);
@@ -227,7 +212,7 @@ function selectMole(moles) {
 function popup(mole) {
     mole.style.transform = "translateY(" + -popupDistance + "rem)";
     mole.dataset.moleState = "active"
-    let timer = setTimeout(() => {
+    let timer = setTimeout(function() {
         popdown(mole);
     }, popupTimer);
     return timer
