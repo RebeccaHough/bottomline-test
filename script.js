@@ -224,8 +224,13 @@ function popup(mole) {
  * @param {Element} mole HTML element to be moved
  */
 function popdown(mole) {
+    //self-destructing listener
+    mole.addEventListener("transitionend", function transitionHandler(e) {
+        mole.dataset.moleState = "hidden";
+        e.stopPropagation();
+        mole.removeEventListener("transitionend", transitionHandler);
+    });
     mole.style.transform = "translateY(" + popupDistance + "rem)";
-    mole.dataset.moleState = "hidden"
 }
 
 /**
