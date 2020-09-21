@@ -53,7 +53,7 @@ function startGame() {
     paused = false;
 
     console.log("Game started.");
-    updateGameStateText(false, "Game in progress.");
+    updateGameStateText(true, "Game in progress.");
 
     //toggle buttons
     updateButton("pauseBtn", true);
@@ -81,7 +81,7 @@ function pauseGame() {
     //if game has ended/is already paused, prevent pausing
     if(ended || paused) return;
     console.log("Game paused.");
-    updateGameStateText(false, "Game paused.");
+    updateGameStateText(true, "Game paused.");
     clearInterval(game);
     pauseTimer();
     //to avoid having to un/re-register game area click listener
@@ -101,7 +101,7 @@ function resetGame() {
     //override from pauseGame()
     updateButton("startBtn", true);
 
-    updateGameStateText(true);
+    updateGameStateText(false);
     updateScore(0);
     timeToCountdownFrom = totalGameTime;
     setTimerValue(document.getElementById("timeLeft"), timeToCountdownFrom)
@@ -116,7 +116,7 @@ function endGame() {
     clearInterval(gameTimer);
     paused = true;
     ended = true;
-    updateGameStateText(false, "Game over! Final score: " + score);
+    updateGameStateText(true, "Game over! Final score: " + score);
     updateButton("pauseBtn", false);
     updateButton("startBtn", false);
 }
@@ -195,6 +195,7 @@ function clickHandler(e) {
 /**
  * Get random mole from array of moles (pseudo-random)
  * @param {HTMLCollection} moles 
+ * @returns {Element} a HTML Element for the chosen mole
  */
 function selectMole(moles) {
     let max = moles.length;
@@ -262,12 +263,12 @@ function updateScore(amount) {
 
 /**
  * Inform the user of the current game state
- * @param {boolean} hide if true, don't display game state text 
+ * @param {boolean} show if true, display game state text; if false, don't display 
  * @param {string} text optional text to set game state text to
  */
-function updateGameStateText(hide, text) {
+function updateGameStateText(show, text) {
     let gameState = document.getElementById("gameState");
-    if(hide) {
+    if(!show) {
         gameState.hidden = true;
         gameState.classList.remove('show');
         gameState.classList.add('hidden');
@@ -282,7 +283,7 @@ function updateGameStateText(hide, text) {
 
 /**
  * Visually enable/disable the button with id buttonName
- * By adding/removing 'disabled' css class 
+ * by adding/removing 'disabled' css class 
  * @param {string} buttonName id of the button to set state of
  * @param {boolean} state true to enable button, false to disable button
  */
