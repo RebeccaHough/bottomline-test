@@ -104,7 +104,7 @@ function resetGame() {
     updateGameStateText(false);
     updateScore(0);
     timeToCountdownFrom = totalGameTime;
-    setTimerValue(document.getElementById("timeLeft"), timeToCountdownFrom)
+    setTimerValue(document.getElementById("timeLeft"), timeToCountdownFrom);
 }
 
 /**
@@ -132,15 +132,14 @@ function startTimer(gameTimerText, duration) {
 
     function timer() {
         //get the number of seconds that have elapsed since startTimer() was called
-        diff = duration - (parseInt(Date.now() - start));
-        //store current time elapsed to facilitate restarting of timer
+        diff = duration - (parseInt((Date.now() - start) / 1000) * 1000);
+
+        //store current time elapsed (in ms) to facilitate restarting of timer
         timeToCountdownFrom = diff;
         
         //set in dom
         setTimerValue(gameTimerText, diff);
         
-        //get difference in seconds
-        diff = diff / 1000;
         //if timer reaches zero
         if(diff <= 0) endGame();
     };
@@ -159,11 +158,11 @@ function pauseTimer() {
 /**
  * Set the timer's value
  * @param {Element} gameTimerText 
- * @param {number} time in milliseoncds
+ * @param {number} time in milliseconds
  */
 function setTimerValue(gameTimerText, time) {
     //convert to seconds
-    time = time / 1000
+    time = time / 1000;
 
     //truncate
     let minutes = parseInt(time / 60);
